@@ -118,4 +118,13 @@ void stop_webserver(httpd_handle_t &server) {
     }
 }
 
+void init_webserver(){
+    httpd_handle_t server = start_webserver();
+    if (server == NULL) {
+        ESP_LOGI(TAG_HTTP, "Failed to start web server!");
+    } else {
+        ESP_LOGI(TAG_HTTP, "Web server started!");
+    }
+}
+
 #endif // HTTP_SERVER_H
