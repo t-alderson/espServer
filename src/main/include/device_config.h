@@ -48,7 +48,7 @@
 #define LOW 0
 
 // Add Device Specific config
-// #include "heltec_unofficial.h"
+#include "heltec_unofficial.h"
 
 void init_nvs(){
     // Initialize NVS
