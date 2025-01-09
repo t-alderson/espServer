@@ -106,4 +106,16 @@ esp_err_t wifi_start(void) {
     return ESP_OK;
 }
 
+void init_wifi(const char* ssd="test", const char* pass="12345678") {
+    ESP_ERROR_CHECK(wifi_manager_init());
+    ESP_ERROR_CHECK(wifi_set_config(ssd, pass));
+    ESP_ERROR_CHECK(wifi_start());
+
+    while (!wifi_manager_is_connected()) {
+        const char* waiting_message = "Waiting for WiFi connection setup...";
+        ESP_LOGI(TAG_WIFI, "%s", waiting_message);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+} 
+
 #endif // WIFI_MANAGER_H

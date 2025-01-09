@@ -1,4 +1,4 @@
- #ifndef DEVICE_CONFIG_H
+#ifndef DEVICE_CONFIG_H
 #define DEVICE_CONFIG_H
 
 // Core includes
@@ -31,27 +31,33 @@
 #include "driver/ledc.h"
 
 // Logging tags
-#define TAG_SYSTEM "system"
-#define TAG_WIFI   "wifi"
-#define TAG_HTTP   "http"
-#define TAG_SENSOR "sensor"
+#define TAG_SETUP     "system setup"
+#define TAG_SYSTEM    "system mgr"
+#define TAG_WIFI      "wifi mgr"
+#define TAG_HTTP      "http mgr"
+#define TAG_SENSOR    "sensor mgr"
+#define TAG_ACTUATOR  "actuator mgr"
 
 // WiFi configuration
 #define WIFI_SSID "your_ssid"
 #define WIFI_PASS "your_password"
 #define WIFI_MAXIMUM_RETRY 5
 
-// GPIO definitions (customize based on your hardware)
-#define GPIO_OUTPUT_PIN_SEL  ((1ULL<<GPIO_NUM_2) | (1ULL<<GPIO_NUM_4))
-#define GPIO_INPUT_PIN_SEL   ((1ULL<<GPIO_NUM_5) | (1ULL<<GPIO_NUM_18))
+// DigitalPin constants
+#define HIGH 1
+#define LOW 0
 
-// ADC channels (customize based on your hardware)
-#define ADC1_CHANNEL_0     ADC1_CHANNEL_0  // GPIO36
-#define ADC1_CHANNEL_1     ADC1_CHANNEL_3  // GPIO39
+// Add Device Specific config
+// #include "heltec_unofficial.h"
 
-// I2C configuration (customize based on your hardware)
-#define I2C_MASTER_SCL_IO    22
-#define I2C_MASTER_SDA_IO    21
-#define I2C_MASTER_FREQ_HZ   400000
+void init_nvs(){
+    // Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+}
 
 #endif // DEVICE_CONFIG_H
